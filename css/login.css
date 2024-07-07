@@ -42,6 +42,7 @@
 .form-control:focus {
     background-color: #fff;
     box-shadow: 0 0 0 0.2rem rgba(70, 117, 78, 0.25);
+    border-color: #94ad80;
 }
 
 .btn-primary {

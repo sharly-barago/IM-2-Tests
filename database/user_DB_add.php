@@ -5,8 +5,8 @@ $table_name = $_SESSION['table'];
 $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $email = $_POST['email'];
-$password = $_POST['password'];
-$encrypted = password_hash($password, PASSWORD_DEFAULT);
+$password = isset($_POST['password']) ? $_POST['password'] : null;
+$encrypted = $password ? password_hash($password, PASSWORD_DEFAULT) : null;
 $userId = isset($_POST['id']) ? $_POST['id'] : null;
 
 $response = ['success' => false, 'message' => 'An error occurred.'];
@@ -16,18 +16,24 @@ try {
 
     if ($userId) {
         // Update existing user
+        $command = "UPDATE $table_name SET fname = :fname, lname = :lname, email = :email";
+
         if (!empty($password)) {
-            $command = "UPDATE $table_name SET fname = :fname, lname = :lname, email = :email, password = :encrypted, updated_at = NOW() WHERE id = :id";
-            $stmt = $conn->prepare($command);
-            $stmt->bindParam(':encrypted', $encrypted);
-        } else {
-            $command = "UPDATE $table_name SET fname = :fname, lname = :lname, email = :email, updated_at = NOW() WHERE id = :id";
-            $stmt = $conn->prepare($command);
+            $command .= ", password = :encrypted";
         }
+
+        $command .= ", updated_at = NOW() WHERE id = :id";
+
+        $stmt = $conn->prepare($command);
         $stmt->bindParam(':id', $userId);
         $stmt->bindParam(':fname', $fname);
         $stmt->bindParam(':lname', $lname);
         $stmt->bindParam(':email', $email);
+
+        if (!empty($password)) {
+            $stmt->bindParam(':encrypted', $encrypted);
+        }
+
         $stmt->execute();
 
         $response = [

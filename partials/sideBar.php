@@ -12,7 +12,7 @@
                 <a href="dashboard.php"><i class="fa fa-dashboard"></i> <span class="menuText"> Dashboard</span></a>
             </li>
             <li>
-                <a href="userAdd - Copy.php"><i class="fa fa-user"></i> <span class="menuText"> Profile List</span></a>
+                <a href="userAdd.php"><i class="fa fa-user"></i> <span class="menuText"> Profile List</span></a>
             </li>
             <li>
                 <a href=""><i class="fa fa-server"></i> <span class="menuText"> Inventory</span></a>
