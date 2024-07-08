@@ -18,17 +18,12 @@ include('partials/header.php');
 
         <div class="dashboard_content d-flex justify-content-center">
             <div class="container m-0 p-0 mw-100">
-
-                <?php include('partials/userAddModal.php') ?>
-                <?php include('partials/userUpdateModal.php') ?>
-
                 <div class="card h-100 border-0">
-
                     <div class="card-header p-3 bg-white d-flex justify-content-between">
                         <h2 class="card-title m-2"><i class="fa fa-list"></i> List of Users</h2>
-                        <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                        <a href="userAddForm.php" class="btn btn-primary m-2">
                             Add New User
-                        </button>
+                        </a>
                     </div>
 
                     <div class="card-body p-0">
@@ -57,10 +52,12 @@ include('partials/header.php');
                                             <td class="pt-3"><?= date('M d, Y @ h:i:s A', strtotime($user['created_at'])) ?></td>
                                             <td class="pt-3"><?= date('M d, Y @ h:i:s A', strtotime($user['updated_at'])) ?></td>
                                             <td class="text-center">
-                                                <button class="btn btn-sm btn-outline-primary updateUser m-1" data-bs-toggle="modal" data-bs-target="#updateUserModal" data-user-id="<?= $user['id'] ?>" data-fname="<?= htmlspecialchars($user['fname']) ?>" data-lname="<?= htmlspecialchars($user['lname']) ?>" data-email="<?= htmlspecialchars($user['email']) ?>">
-                                                    <i class="fa fa-pencil"></i> Edit </button>
+                                                <a href="userUpdateForm.php?id=<?= $user['id'] ?>" class="btn btn-sm btn-outline-primary m-1">
+                                                    <i class="fa fa-pencil"></i> Edit
+                                                </a>
                                                 <button class="btn btn-sm btn-outline-danger deleteUser m-1" data-user-id="<?= $user['id'] ?>" data-fname="<?= htmlspecialchars($user['fname']) ?>" data-lname="<?= htmlspecialchars($user['lname']) ?>">
-                                                    <i class="fa fa-trash"></i> Delete </button>
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -77,70 +74,20 @@ include('partials/header.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const addUserForm = document.getElementById('addUserForm');
-        const updateUserForm = document.getElementById('updateUserForm');
+        <?php
+        if (isset($_SESSION['success_message'])) {
+            echo "alert('" . addslashes($_SESSION['success_message']) . "');";
+            unset($_SESSION['success_message']);
+        }
+        if (isset($_SESSION['error_message'])) {
+            echo "alert('Error: " . addslashes($_SESSION['error_message']) . "');";
+            unset($_SESSION['error_message']);
+        }
+        ?>
+    });
 
-        addUserForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(addUserForm);
-
-            fetch('database/user_DB_add.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.success) {
-                        location.reload();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        });
-
-        updateUserForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(updateUserForm);
-
-            fetch('database/user_DB_add.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert(data.message);
-                    if (data.success) {
-                        location.reload();
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred. Please try again.');
-                });
-        });
-
+    document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', function(e) {
-            if (e.target.closest('.updateUser')) {
-                e.preventDefault();
-                const updateButton = e.target.closest('.updateUser');
-                const userId = updateButton.dataset.userId;
-                const fname = updateButton.dataset.fname;
-                const lname = updateButton.dataset.lname;
-                const email = updateButton.dataset.email;
-
-                updateUserForm.querySelector('#id').value = userId;
-                updateUserForm.querySelector('#updateFname').value = fname;
-                updateUserForm.querySelector('#updateLname').value = lname;
-                updateUserForm.querySelector('#updateEmail').value = email;
-                updateUserForm.querySelector('#updatePassword').value = '';
-
-                const updateUserModal = new bootstrap.Modal(document.getElementById('updateUserModal'));
-                updateUserModal.show();
-            }
-
             if (e.target.closest('.deleteUser')) {
                 e.preventDefault();
                 const deleteButton = e.target.closest('.deleteUser');
