@@ -42,7 +42,7 @@ include('partials/header.php');
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <img src="images/Palm_Grass_logo.png" alt="Palm Grass Hotel" class="img-fluid logo">
-                        <hr class="divider"/>
+                        <hr class="divider" />
                     </div>
 
                     <?php if (!empty($error_message)) { ?>

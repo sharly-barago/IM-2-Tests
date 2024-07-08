@@ -4,7 +4,6 @@ session_start();
 if (!isset($_SESSION['user'])) header('location: login.php');
 $_SESSION['table'] = 'users';
 $user = $_SESSION['user'];
-$users = include('database/showUsers.php');
 
 $pageTitle = 'Add User';
 include('partials/header.php');
@@ -20,7 +19,7 @@ include('partials/header.php');
             <div class="container">
                 <div class="card m-5">
                     <div class="card-header p-3 bg-white">
-                        <h2 class="card-title m-2">Add User</h2>
+                        <h2 class="card-title my-2 mx-4">Add User</h2>
                     </div>
                     <div class="card-body p-5">
                         <form action="database/user_DB_add.php" method="POST" class="AddForm">
