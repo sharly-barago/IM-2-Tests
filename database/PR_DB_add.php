@@ -1,36 +1,36 @@
 <?php
 session_start();
 
-$table_name = $_SESSION['table'];
-$date_needed = $_POST['date_needed'];
-$status = $_POST['status'];
-$estimated_cost = $_POST['estimated_cost'];
-$product_names = isset($_POST['products']) ? $_POST['products'] : [];
+$table_name = 'purchase_requests';
+$date_needed = $_POST['dateNeeded'];
+$status = $_POST['PRStatus'];
+$estimated_cost = $_POST['estimatedCost'];
+$reason = $_POST['reason'];
+$requested_by = $_POST['requestedBy']; // should be full name of current user
+$PR_date_requested = date('Y-m-d'); // Assuming the current date for PRDateRequested
 
-// Convert product names array to comma-separated string
-$product_names_str = implode(', ', $product_names);
-
-$PR_id = isset($_POST['id']) ? $_POST['id'] : null;
+$PR_id = isset($_POST['PRID']) ? $_POST['PRID'] : null;
 
 try {
     include('connect.php');
 
-    if ($PR_id) {
-        // Update existing purchase request
-        $command = "UPDATE $table_name SET user_id = :user_id, date_needed = :date_needed, status = :status, estimated_cost = :estimated_cost, products = :products, updated_at = NOW() WHERE id = :id";
+    if ($PR_id && $status = 'pending') { //can you implement something like this
+        // Update existing purchase request without changing 'requestedBy'
+        $command = "UPDATE $table_name SET PRDateRequested = :PRDateRequested, dateNeeded = :dateNeeded, PRStatus = :PRStatus, estimatedCost = :estimatedCost, reason = :reason WHERE PRID = :PRID";
         $stmt = $conn->prepare($command);
-        $stmt->bindParam(':id', $PR_id);
+        $stmt->bindParam(':PRID', $PR_id);
     } else {
         // Insert new purchase request
-        $command = "INSERT INTO $table_name (user_id, date_needed, status, estimated_cost, products, date_created) VALUES (:user_id, :date_needed, :status, :estimated_cost, :products, NOW())";
+        $command = "INSERT INTO $table_name (requestedBy, PRDateRequested, dateNeeded, PRStatus, estimatedCost, reason) VALUES (:requestedBy, :PRDateRequested, :dateNeeded, :PRStatus, :estimatedCost, :reason)";
         $stmt = $conn->prepare($command);
+        $stmt->bindParam(':requestedBy', $requested_by);
     }
 
-    $stmt->bindParam(':user_id', $user_id); // Assuming $user_id is set elsewhere
-    $stmt->bindParam(':date_needed', $date_needed);
-    $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':estimated_cost', $estimated_cost);
-    $stmt->bindParam(':products', $product_names_str);
+    $stmt->bindParam(':PRDateRequested', $PR_date_requested);
+    $stmt->bindParam(':dateNeeded', $date_needed);
+    $stmt->bindParam(':PRStatus', $status);
+    $stmt->bindParam(':estimatedCost', $estimated_cost);
+    $stmt->bindParam(':reason', $reason);
     $stmt->execute();
 
     $message = "Purchase request successfully " . ($PR_id ? "updated" : "added") . ".";
@@ -41,3 +41,4 @@ try {
     $_SESSION['error_message'] = 'Error processing purchase request: ' . $e->getMessage();
     header('location: ../PR.php');
 }
+?>

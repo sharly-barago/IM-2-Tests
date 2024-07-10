@@ -17,27 +17,48 @@ include('partials/header.php');
         <div class="dashboard_content d-flex justify-content-center">
             <div class="container">
                 <div class="card m-5">
-                    <div class="card-header p-3 bg-white">
+                    <div class="card-header p-3 bg-white d-flex justify-content-between">
                         <h2 class="card-title my-2 mx-4">Create Purchase Request</h2>
+                        <?php include('partials/PRSuggestionsModal.php') ?>
+                        <button type="button" class="btn btn-primary my-2 mx-4" data-bs-toggle="modal" data-bs-target="#PRSuggestions">
+                            Suggestions
+                        </button>
                     </div>
                     <div class="card-body p-5" style="max-height: calc(100vh - 300px); overflow-y: auto;">
                         <form action="database/PR_DB_add.php" method="POST" class="AddForm">
-                            <input type="hidden" name="id" id="request_id">
                             <div class="addFormContainer mb-3">
                                 <label for="date_needed" class="form-label">Date Needed</label>
-                                <input type="date" class="form-control" name="date_needed" id="date_needed">
+                                <input type="date" class="form-control" name="dateNeeded" id="date_needed">
                             </div>
-                            <div class="addFormContainer mb-4">
+                            <!-- <div class="addFormContainer mb-3">
                                 <label for="estimated_cost" class="form-label">Estimated Cost</label>
-                                <input type="text" class="form-control" name="estimated_cost" id="estimated_cost">
+                                <input type="text" class="form-control" name="estimatedCost" id="estimated_cost">
+                            </div> -->
+                            <div class="addFormContainer mb-4">
+                                <label for="reason" class="form-label">Reason</label>
+                                <input type="text" class="form-control" name="reason" id="reason">
                             </div>
+                            <!-- <div class="addFormContainer mb-3">
+                                <label for="PRStatus" class="form-label">Status</label>
+                                <select class="form-control" name="PRStatus" id="PRStatus">
+                                    <option value="pending">Pending</option>
+                                    <option value="approved">Approved</option>
+                                    <option value="converted">Converted</option>
+                                </select>
+                            </div> -->
                             <div id="productContainer">
                                 <div class="d-flex justify-content-between mb-3">
-                                    <label for="product" class="form-label pt-3">Product/s</label>
+                                    <label for="product" class="form-label pt-2">Product/s</label>
                                     <button type="button" id="addProductButton" class="btn btn-primary mb-3">Add Product</button>
                                 </div>
-                                <div class="productInput mb-2 d-flex">
-                                    <input type="text" class="form-control" name="products[]" placeholder="Product Name">
+                                <div class="productInput mb-2 d-flex justify-content-between">
+                                    <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
+                                    <input type="text" class="form-control" name="supplierID[]" placeholder="Supplier Name">
+                                    <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
+                                    <div class="p-3 border rounded">
+                                        <p>Cost: </p>
+                                    </div>
+                                    <!-- <input type="text" class="form-control mx-2" name="productEstimatedCost[]" placeholder="Estimated Cost"> -->
                                     <button type="button" class="btn btn-danger btn-sm removeProduct mx-2">Remove</button>
                                 </div>
                             </div>
@@ -62,7 +83,9 @@ include('partials/header.php');
             const productInput = document.createElement('div');
             productInput.classList.add('productInput', 'mb-2', 'd-flex');
             productInput.innerHTML = `
-                <input type="text" class="form-control" name="products[]" placeholder="Product Name">
+                <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
+                <input type="text" class="form-control mx-2" name="supplierID[]" placeholder="Supplier Name">
+                <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
                 <button type="button" class="btn btn-danger btn-sm removeProduct mx-2">Remove</button>
             `;
             productContainer.appendChild(productInput);

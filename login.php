@@ -1,17 +1,19 @@
 <?php
 session_start();
-if (isset($_SESSION['user'])) header('location: dashboard.php');
+if (isset($_SESSION['user'])) {
+    header('location: dashboard.php');
+    exit();
+}
 
 $error_message = '';
-if ($_POST) {
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include('database/connect.php');
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $query = 'SELECT * FROM users WHERE users.email=:email';
+    $query = 'SELECT * FROM users WHERE email=:email';
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':email', $username);
+    $stmt->bindParam(':email', $email);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
@@ -21,6 +23,7 @@ if ($_POST) {
         if (password_verify($password, $user['password'])) {
             $_SESSION['user'] = $user;
             header('Location: dashboard.php');
+            exit();
         } else {
             $error_message = "Please make sure that your credentials are correct.";
         }
@@ -42,7 +45,7 @@ include('partials/header.php');
                 <div class="card-body">
                     <div class="text-center mb-4">
                         <img src="images/Palm_Grass_logo.png" alt="Palm Grass Hotel" class="img-fluid logo">
-                        <hr class="divider" />
+                        <hr class="divider"/>
                     </div>
 
                     <?php if (!empty($error_message)) { ?>
@@ -54,8 +57,8 @@ include('partials/header.php');
 
                     <form action="login.php" method="POST">
                         <div class="mb-4">
-                            <label for="username" class="form-label login">Email</label>
-                            <input type="email" class="form-control" id="username" name="username" placeholder="Enter your email" required>
+                            <label for="email" class="form-label login">Email</label>
+                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" required>
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label login">Password</label>

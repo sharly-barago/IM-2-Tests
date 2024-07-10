@@ -1,50 +1,46 @@
 <?php
-session_start();
+include('connect.php');
 
-$table_name = $_SESSION['table'];
-$fname = $_POST['fname'];
-$lname = $_POST['lname'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$encrypted = password_hash($password, PASSWORD_DEFAULT);
-$userId = isset($_POST['id']) ? $_POST['id'] : null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userID = $_POST['userID'] ?? null;
+    $fname = $_POST['fname'];
+    $lname = $_POST['lname'];
+    $department = $_POST['department'];
+    $permissions = $_POST['permissions'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $workStatus = $_POST['workStatus'];
 
-try {
-    include('connect.php');
-
-    if ($userId) {
+    if ($userID) {
         // Update existing user
         if (!empty($password)) {
-            $command = "UPDATE $table_name SET fname = :fname, lname = :lname, email = :email, password = :encrypted, updated_at = NOW() WHERE id = :id";
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $command = "UPDATE users SET fname = :fname, lname = :lname, department = :department, permissions = :permissions, email = :email, password = :password, workStatus = :workStatus WHERE userID = :userID";
             $stmt = $conn->prepare($command);
-            $stmt->bindParam(':encrypted', $encrypted);
+            $stmt->bindParam(':password', $hashed_password);
         } else {
-            $command = "UPDATE $table_name SET fname = :fname, lname = :lname, email = :email, updated_at = NOW() WHERE id = :id";
+            $command = "UPDATE users SET fname = :fname, lname = :lname, department = :department, permissions = :permissions, email = :email, workStatus = :workStatus WHERE userID = :userID";
             $stmt = $conn->prepare($command);
         }
-        $stmt->bindParam(':id', $userId);
-        $stmt->bindParam(':fname', $fname);
-        $stmt->bindParam(':lname', $lname);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        $message = $fname . ' ' . $lname . ' successfully updated.';
+        $stmt->bindParam(':userID', $userID, PDO::PARAM_INT);
     } else {
         // Insert new user
-        $command = "INSERT INTO $table_name (fname, lname, password, email, created_at, updated_at) VALUES (:fname, :lname, :encrypted, :email, NOW(), NOW())";
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $command = "INSERT INTO users (fname, lname, department, permissions, email, password, workStatus) VALUES (:fname, :lname, :department, :permissions, :email, :password, :workStatus)";
         $stmt = $conn->prepare($command);
-        $stmt->bindParam(':fname', $fname);
-        $stmt->bindParam(':lname', $lname);
-        $stmt->bindParam(':encrypted', $encrypted);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        $message = $fname . ' ' . $lname . ' successfully added to the system.';
+        $stmt->bindParam(':password', $hashed_password);
     }
 
-    $_SESSION['success_message'] = $message;
-    header('location: ../userAdd.php');
-} catch (PDOException $e) {
-    $_SESSION['error_message'] = $e->getMessage();
-    header('location: ../userAdd.php');
+    $stmt->bindParam(':fname', $fname);
+    $stmt->bindParam(':lname', $lname);
+    $stmt->bindParam(':department', $department);
+    $stmt->bindParam(':permissions', $permissions);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':workStatus', $workStatus);
+
+    $stmt->execute();
 }
+
+$_SESSION['response'] = $response;
+header('location: ../supplierAdd.php');
+?>

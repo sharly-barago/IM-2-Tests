@@ -21,12 +21,13 @@ include('partials/header.php');
                     <div class="card-header p-3 bg-white d-flex justify-content-between">
                         <h2 class="card-title m-2"><i class="fa fa-list"></i> Purchase Requests</h2>
                         <div class="d-flex m-2">
-                            <a href="#" class="btn btn-primary mx-2">
+                            <?php include('partials/PRSuggestionsModal.php') ?>
+                            <button type="button" class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#PRSuggestions">
                                 Suggestions
-                            </a>
+                            </button>
                             <a href="PRAddForm.php" class="btn btn-primary mx-2">
                                 Create Purchase Request
-                            </a>
+                            </a>  
                         </div>
                     </div>
 
@@ -36,11 +37,11 @@ include('partials/header.php');
                                 <thead class="bg-white">
                                     <tr class="purchaseRequestAdd sticky-top">
                                         <th>#</th>
-                                        <th>User ID</th>
+                                        <th>Requested By</th>
+                                        <th>Date Requested</th>
                                         <th>Date Needed</th>
                                         <th>Status</th>
                                         <th>Estimated Cost</th>
-                                        <th>Date Created</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -50,16 +51,16 @@ include('partials/header.php');
                                     foreach ($purchaseRequests as $request) { ?>
                                         <tr>
                                             <td class="pt-3"><?= ++$index ?></td>
-                                            <td class="pt-3"><?= htmlspecialchars($request['user_id']) ?></td>
-                                            <td class="pt-3"><?= htmlspecialchars($request['date_needed']) ?></td>
-                                            <td class="pt-3"><?= htmlspecialchars($request['status']) ?></td>
-                                            <td class="pt-3"><?= htmlspecialchars($request['estimated_cost']) ?></td>
-                                            <td class="pt-3"><?= date('M d, Y @ h:i:s A', strtotime($request['date_created'])) ?></td>
+                                            <td class="pt-3"><?= htmlspecialchars($request['requestedBy']) ?></td>
+                                            <td class="pt-3"><?= date('M d, Y @ h:i:s A', strtotime($request['PRDateRequested'])) ?></td>
+                                            <td class="pt-3"><?= htmlspecialchars($request['dateNeeded']) ?></td>
+                                            <td class="pt-3"><?= htmlspecialchars($request['PRStatus']) ?></td>
+                                            <td class="pt-3"><?= htmlspecialchars($request['estimatedCost']) ?></td>
                                             <td class="text-center">
-                                                <a href="PRUpdateForm.php?id=<?= $request['id'] ?>" class="btn btn-sm btn-outline-primary m-1">
+                                                <a href="PRUpdateForm.php?id=<?= $request['PRID'] ?>" class="btn btn-sm btn-outline-primary m-1">
                                                     <i class="fa fa-pencil"></i> Edit
                                                 </a>
-                                                <button class="btn btn-sm btn-outline-danger deleteRequest m-1" data-request-id="<?= $request['id'] ?>">
+                                                <button class="btn btn-sm btn-outline-danger deleteRequest m-1" data-request-id="<?= $request['PRID'] ?>">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </td>

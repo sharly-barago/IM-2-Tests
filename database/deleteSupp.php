@@ -11,20 +11,20 @@ if (!isset($_SESSION['user'])) {
 include('connect.php');
 
 $data = json_decode(file_get_contents('php://input'), true);
-$item_id = isset($data['itemID']) ? (int) $data['itemID'] : 0;
+$supplier_id = isset($data['supplierID']) ? (int) $data['supplierID'] : 0;
 
 try {
-    if ($item_id > 0) {
-        $stmt = $conn->prepare("DELETE FROM item WHERE itemID = :itemID");
-        $stmt->bindParam(':itemID', $item_id, PDO::PARAM_INT);
+    if ($supplier_id > 0) {
+        $stmt = $conn->prepare("DELETE FROM supplier WHERE supplierID = :supplierID");
+        $stmt->bindParam(':supplierID', $supplier_id, PDO::PARAM_INT);
         $stmt->execute();
 
         $response = [
             'success' => true,
-            'message' => 'Item successfully deleted from the system.'
+            'message' => 'Supplier successfully deleted from the system.'
         ];
     } else {
-        throw new Exception('Invalid item ID.');
+        throw new Exception('Invalid supplier ID.');
     }
 } catch (Exception $e) {
     $response = [
