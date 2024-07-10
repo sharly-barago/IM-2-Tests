@@ -52,12 +52,19 @@ td {
     color: #dbd6d6;
 }
 
-/* .dashboard_content {
-    flex: 1;
-    padding: 20px;
-} */
-
 .dashboard_content_main {
     background-color: #fff;
     min-height: 500px;
+}
+
+input.search-bar {
+    border-radius: 30px;
+    border: 1px solid #484848;    
+    transition: all 0.3s ease;
+    height: 40px;
+}
+
+input.search-bar:focus {
+    box-shadow: 0 0 0 0.2rem rgba(70, 117, 78, 0.25);
+    outline-color: #94ad80;
 }

@@ -1,7 +1,7 @@
 <div class="modal fade" id="PRSuggestions" tabindex="-1" role="dialog" aria-labelledby="PRSuggestionsModals" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header mx-2">
                 <h5 class="modal-title" id="PRSuggestionsLabel">PR Suggestions</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

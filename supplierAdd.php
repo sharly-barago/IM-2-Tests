@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION['user'])) header('location: login.php');
 $_SESSION['table'] = 'supplier'; // Use the new table name
 $user = $_SESSION['user'];
-$products = include('database/showSupp.php'); 
+$products = include('database/showSupp.php');
 
 $pageTitle = 'Supplier Management';
 include('partials/header.php');
@@ -20,9 +20,13 @@ include('partials/header.php');
                 <div class="card h-100 border-0">
                     <div class="card-header p-3 bg-white d-flex justify-content-between">
                         <h2 class="card-title m-2"><i class="fa fa-list"></i> List of Suppliers</h2>
-                        <a href="supplierAddForm.php" class="btn btn-primary m-2">
-                            Add New Supplier
-                        </a>
+                        <div class="d-flex align-items-center m-2">
+                            <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
+                            <input type="text" id="searchInput" class="search-bar mx-2 p-3" placeholder="Search for products...">
+                            <a href="supplierAddForm.php" class="btn btn-primary mx-2">
+                                Add New Supplier
+                            </a>
+                        </div>
                     </div>
 
                     <div class="card-body p-0">
@@ -67,6 +71,25 @@ include('partials/header.php');
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const table = document.querySelector('table');
+        const rows = table.querySelectorAll('tbody tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
         <?php
         if (isset($_SESSION['success_message'])) {

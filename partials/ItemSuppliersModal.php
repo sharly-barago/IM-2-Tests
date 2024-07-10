@@ -1,9 +1,16 @@
 <div class="modal fade" id="ItemSuppliers" tabindex="-1" aria-labelledby="ItemSuppliersView" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header mx-2 d-flex justify-content-between">
                 <h5 class="modal-title" id="ItemSuppliersViewLabel">Suppliers for <span id="itemName"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="d-flex align-items-center">
+                    <a href="ItemCostAddForm.php" class="btn btn-primary mx-2">
+                        Add Supplier
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
             </div>
             <div class="modal-body">
                 <div class="table-responsive flex-grow-1">
@@ -19,7 +26,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="text-muted mt-0 mx-3" id="supplierCount"></p>
+                <p class="text-muted mb-0" id="supplierCount"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
