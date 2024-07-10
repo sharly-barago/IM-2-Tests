@@ -28,7 +28,7 @@ if (isset($_GET['supplierID'])) {
                     <div class="card-header p-3 bg-white">
                         <h2 class="card-title m-2">Update Supplier</h2>
                     </div>
-                    <div class="card-body p-5" style="max-height: calc(100vh - 300px); overflow-y: auto;">
+                    <div class="card-body p-5">
                         <form action="database/supplier_DB_add.php" method="POST" class="AddForm">
                             <input type="hidden" name="supplierID" id="supplierID" value="<?= $supplierData['supplierID'] ?? '' ?>">
                             <div class="addFormContainer mb-3">

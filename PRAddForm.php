@@ -55,7 +55,7 @@ include('partials/header.php');
                                     <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
                                     <input type="text" class="form-control" name="supplierID[]" placeholder="Supplier Name">
                                     <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
-                                    <div class="p-3 border rounded">
+                                    <div class="px-3 mx-2 border rounded">
                                         <p>Cost: </p>
                                     </div>
                                     <!-- <input type="text" class="form-control mx-2" name="productEstimatedCost[]" placeholder="Estimated Cost"> -->
@@ -86,6 +86,9 @@ include('partials/header.php');
                 <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
                 <input type="text" class="form-control mx-2" name="supplierID[]" placeholder="Supplier Name">
                 <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
+                <div class="px-3 mx-2 border rounded">
+                                        <p>Cost: </p>
+                                    </div>
                 <button type="button" class="btn btn-danger btn-sm removeProduct mx-2">Remove</button>
             `;
             productContainer.appendChild(productInput);

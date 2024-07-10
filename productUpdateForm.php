@@ -53,7 +53,10 @@ if (isset($_GET['itemID'])) {
                             </div>
                             <div class="addFormContainer mb-3">
                                 <label for="itemStatus" class="form-label">Item Status</label>
-                                <input type="number" class="form-control" name="itemStatus" id="itemStatus" value="<?= $productData['itemStatus'] ?? '' ?>">
+                                <select class="form-control" name="itemStatus" id="itemStatus">
+                                    <option value="selling">Selling</option>
+                                    <option value="not selling">Not Selling</option>
+                                </select>
                             </div>
                             <div class="d-flex flex-row-reverse flex-wrap">
                                 <button type="submit" class="btn btn-primary mx-1 mt-4">Submit</button>

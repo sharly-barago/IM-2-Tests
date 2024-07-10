@@ -53,12 +53,13 @@ include('partials/header.php');
                                             <td class="pt-3"><?= htmlspecialchars($product['minStockLevel']) ?></td>
                                             <td class="pt-3"><?= htmlspecialchars($product['itemStatus']) ?></td>
                                             <td class="text-center">
+                                                <?php include('partials/ItemSuppliersModal.php') ?>
+                                                <button type="button" class="btn btn-sm btn-outline-success m-1" data-bs-toggle="modal" data-bs-target="#ItemSuppliers" data-item-id="<?= $product['itemID'] ?>">
+                                                    <i class="fa fa-eye"></i> Suppliers
+                                                </button>
                                                 <a href="productUpdateForm.php?itemID=<?= $product['itemID'] ?>" class="btn btn-sm btn-outline-primary m-1">
                                                     <i class="fa fa-pencil"></i> Edit
                                                 </a>
-                                                <button class="btn btn-sm btn-outline-danger deleteProduct m-1" data-product-id="<?= $product['itemID'] ?>" data-product-name="<?= htmlspecialchars($product['itemName']) ?>">
-                                                    <i class="fa fa-trash"></i> Delete
-                                                </button>
                                             </td>
                                         </tr>
                                     <?php } ?>

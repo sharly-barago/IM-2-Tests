@@ -24,7 +24,7 @@ include('partials/header.php');
                         <form action="database/product_DB_add.php" method="POST" class="AddForm">
                             <input type="hidden" name="itemID" id="item_id">
                             <div class="addFormContainer mb-3">
-                                <label for="itemName" class="form-label">Item Name</label>
+                                 <label for="itemName" class="form-label">Item Name</label>
                                 <input type="text" class="form-control" name="itemName" id="itemName">
                             </div>
                             <div class="addFormContainer mb-3">
