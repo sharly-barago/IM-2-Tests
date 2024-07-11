@@ -22,7 +22,7 @@ include('partials/header.php');
                         <h2 class="card-title m-2"><i class="fa fa-list"></i> List of Suppliers</h2>
                         <div class="d-flex align-items-center m-2">
                             <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
-                            <input type="text" id="searchInput" class="search-bar mx-2 p-3" placeholder="Search for products...">
+                            <input type="text" id="searchInput" class="search-bar mx-2 p-3" placeholder="Search for suppliers...">
                             <a href="supplierAddForm.php" class="btn btn-primary mx-2">
                                 Add New Supplier
                             </a>

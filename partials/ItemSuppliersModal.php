@@ -19,6 +19,7 @@
                             <tr class="userAdd sticky-top">
                                 <th>Company Name</th>
                                 <th>Company Item Cost</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody id="supplierTableBody">
@@ -58,6 +59,7 @@
                             row.innerHTML = `
                                 <td class="pt-3">${supplier.companyName}</td>
                                 <td class="pt-3">${supplier.cost}</td>
+                                <td class="pt-3">${supplier.status}</td>
                             `;
                             tableBody.appendChild(row);
                         });

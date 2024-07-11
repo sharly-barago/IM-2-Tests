@@ -68,3 +68,13 @@ input.search-bar:focus {
     box-shadow: 0 0 0 0.2rem rgba(70, 117, 78, 0.25);
     outline-color: #94ad80;
 }
+
+.product-add-shortcut {
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.product-add-shortcut:hover {
+    text-decoration: none;
+    color: green;
+}

@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['act
     $itemID = $_GET['itemID'];
 
     try {
-        $stmt = $conn->prepare("SELECT supplier.companyName, item_costs.cost 
+        $stmt = $conn->prepare("SELECT supplier.companyName, supplier.status, item_costs.cost 
                                 FROM item_costs 
                                 JOIN supplier ON item_costs.supplierID = supplier.supplierID 
                                 WHERE item_costs.itemID = :itemID 

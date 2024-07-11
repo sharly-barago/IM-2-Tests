@@ -49,16 +49,15 @@ include('partials/header.php');
                             <div id="productContainer">
                                 <div class="d-flex justify-content-between mb-3">
                                     <label for="product" class="form-label pt-2">Product/s</label>
-                                    <button type="button" id="addProductButton" class="btn btn-primary mb-3">Add Product</button>
-                                </div>
-                                <div class="productInput mb-2 d-flex justify-content-between">
-                                    <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
-                                    <input type="text" class="form-control" name="supplierID[]" placeholder="Supplier Name">
-                                    <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
-                                    <div class="px-3 mx-2 border rounded">
-                                        <p>Cost: </p>
+                                    <div class="d-flex align-items-center">
+                                        <p class="text-muted mx-2"><small>Item not found? Add it <a href="productAddForm.php" class="product-add-shortcut">here</a>!</small></p>
+                                        <button type="button" id="addProductButton" class="btn btn-primary mb-3">Add Product</button>
                                     </div>
-                                    <!-- <input type="text" class="form-control mx-2" name="productEstimatedCost[]" placeholder="Estimated Cost"> -->
+                                </div>
+                                <div class="productInput mb-2 d-flex">
+                                    <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
+                                    <input type="number" class="form-control mx-2" step="0.01" min="0" max="999999999.99" name="productEstimatedCost[]" placeholder="Estimated Cost">
+                                    <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
                                     <button type="button" class="btn btn-danger btn-sm removeProduct mx-2">Remove</button>
                                 </div>
                             </div>
@@ -84,11 +83,8 @@ include('partials/header.php');
             productInput.classList.add('productInput', 'mb-2', 'd-flex');
             productInput.innerHTML = `
                 <input type="text" class="form-control" name="itemID[]" placeholder="Item Name">
-                <input type="text" class="form-control mx-2" name="supplierID[]" placeholder="Supplier Name">
+                <input type="number" class="form-control mx-2" step="0.01" min="0" max="999999999.99" name="productEstimatedCost[]" placeholder="Estimated Cost">
                 <input type="text" class="form-control" name="requestQuantity[]" placeholder="Quantity">
-                <div class="px-3 mx-2 border rounded">
-                    <p>Cost: </p>
-                </div>
                 <button type="button" class="btn btn-danger btn-sm removeProduct mx-2">Remove</button>
             `;
             productContainer.appendChild(productInput);
