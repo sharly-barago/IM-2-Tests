@@ -44,8 +44,12 @@ if (isset($_GET['userID'])) {
                                 <input type="text" class="form-control" name="department" id="department" value="<?= $userData['department'] ?? '' ?>">
                             </div>
                             <div class="addFormContainer mb-3">
-                                <label for="permissions" class="form-label">Permissions</label>
-                                <input type="text" class="form-control" name="permissions" id="permissions" value="<?= $userData['permissions'] ?? '' ?>">
+                                <label for="permissions" class="form-label">Position</label>
+                                <select class="form-control" name="permissions" id="permissions">
+                                    <option value="Purchasing Head" <?= (($userData['permissions'] ?? '') == 'Purchasing Head') ? 'selected' : '' ?>>Purchasing Head</option>
+                                    <option value="Admin" <?= (($userData['permissions'] ?? '') == 'Admin') ? 'selected' : '' ?>>Admin</option>
+                                    <option value="IT" <?= (($userData['permissions'] ?? '') == 'IT') ? 'selected' : '' ?>>IT</option>
+                                </select>
                             </div>
                             <div class="addFormContainer mb-3">
                                 <label for="email" class="form-label">Email</label>
@@ -57,7 +61,10 @@ if (isset($_GET['userID'])) {
                             </div>
                             <div class="addFormContainer mb-3">
                                 <label for="workStatus" class="form-label">Work Status</label>
-                                <input type="text" class="form-control" name="workStatus" id="workStatus" value="<?= $userData['workStatus'] ?? '' ?>">
+                                <select class="form-control" name="workStatus" id="workStatus">
+                                    <option value="1" <?= (($userData['workStatus'] ?? '') == '1') ? 'selected' : '' ?>>Active</option>
+                                    <option value="0" <?= (($userData['workStatus'] ?? '') == '0') ? 'selected' : '' ?>>Inactive</option>
+                                </select>
                             </div>
                             <div class="d-flex flex-row-reverse flex-wrap">
                                 <button type="submit" class="btn btn-primary mx-1 mt-4">Submit</button>

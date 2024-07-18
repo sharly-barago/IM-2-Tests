@@ -17,11 +17,10 @@ include('partials/header.php');
 
         <div class="dashboard_content d-flex justify-content-center">
             <div class="container m-0 p-0 mw-100">
-                <div class="card h-100 border-0">
+                <div class="card h-100 m-2">
                     <div class="card-header p-3 bg-white d-flex justify-content-between">
                         <h2 class="card-title m-2"><i class="fa fa-list"></i> List of Suppliers</h2>
                         <div class="d-flex align-items-center m-2">
-                            <!-- <i class="fa fa-search" aria-hidden="true"></i> -->
                             <input type="text" id="searchInput" class="search-bar mx-2 p-3" placeholder="Search for suppliers...">
                             <a href="supplierAddForm.php" class="btn btn-primary mx-2">
                                 Add New Supplier
@@ -30,15 +29,15 @@ include('partials/header.php');
                     </div>
 
                     <div class="card-body p-0">
-                        <div class="table-responsive flex-grow-1" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+                        <div class="table-responsive flex-grow-1" style="max-height: calc(100vh - 230px); overflow-y: auto;">
                             <table class="table table-hover table-striped border-top">
                                 <thead class="bg-white">
                                     <tr class="userAdd sticky-top">
-                                        <th>#</th>
                                         <th>Company Name</th>
                                         <th>Address</th>
                                         <th>Contact Number</th>
                                         <th>Email</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -47,11 +46,11 @@ include('partials/header.php');
                                     $index = 0;
                                     foreach ($products as $product) { ?>
                                         <tr>
-                                            <td class="pt-3"><?= ++$index ?></td>
                                             <td class="pt-3"><?= htmlspecialchars($product['companyName']) ?></td>
                                             <td class="pt-3"><?= htmlspecialchars($product['address']) ?></td>
                                             <td class="pt-3"><?= htmlspecialchars($product['contactNum']) ?></td>
                                             <td class="pt-3"><?= htmlspecialchars($product['supplierEmail']) ?></td>
+                                            <td class="pt-3"><?= htmlspecialchars($product['status']) ?></td>
                                             <td class="text-center">
                                                 <a href="supplierUpdateForm.php?supplierID=<?= $product['supplierID'] ?>" class="btn btn-sm btn-outline-primary m-1">
                                                     <i class="fa fa-pencil"></i> Edit
@@ -72,6 +71,13 @@ include('partials/header.php');
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        <?php
+        if (isset($_SESSION['response'])) {
+            echo "alert('" . addslashes($_SESSION['response']['message']) . "');";
+            unset($_SESSION['response']);
+        }
+        ?>
+
         const searchInput = document.getElementById('searchInput');
         const table = document.querySelector('table');
         const rows = table.querySelectorAll('tbody tr');
@@ -88,22 +94,7 @@ include('partials/header.php');
                 }
             });
         });
-    });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        <?php
-        if (isset($_SESSION['success_message'])) {
-            echo "alert('" . addslashes($_SESSION['success_message']) . "');";
-            unset($_SESSION['success_message']);
-        }
-        if (isset($_SESSION['error_message'])) {
-            echo "alert('Error: " . addslashes($_SESSION['error_message']) . "');";
-            unset($_SESSION['error_message']);
-        }
-        ?>
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('click', function(e) {
             if (e.target.closest('.deleteSupplier')) {
                 e.preventDefault();
